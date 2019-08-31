@@ -14,8 +14,12 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  unique_sides = [a, b, c].uniq
-  [nil, :equilateral, :isosceles, :scalene][unique_sides.size]
+	sorted_sides = [a, b, c].sort
+	if sorted_sides.first <= 0 || sorted_sides[0] + sorted_sides[1] <= sorted_sides[2] 
+		raise TriangleError
+	end
+
+  	[:equilateral, :isosceles, :scalene][sorted_sides.uniq.size - 1]
 end
 
 # Error class used in part 2.  No need to change this code.
