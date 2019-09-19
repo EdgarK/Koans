@@ -31,6 +31,25 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  dice.sort!.compact!
+  throw RuntimeException("To much rolls, max five is allowed") if dice.size > 5
+
+  if dice.empty?
+    return 0
+  elsif dice.count(dice.first) >= 3
+    return (dice.first == 1 ? 1000 : dice.first * 100) + score(dice.slice(3..-1))
+  else
+    score = case dice.first
+    when 1
+      100
+    when 5
+      50
+    else
+      0
+    end
+    return score + score(dice.slice(1..-1))
+  end
+  
 end
 
 class AboutScoringProject < Neo::Koan
